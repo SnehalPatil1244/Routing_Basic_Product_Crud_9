@@ -50,8 +50,6 @@
                             <option [ngValue]="0">No</option>
                         </select>
                     </div>
-
-                     
                     <button *ngIf="!isinEditMode" type="submit" class="btn btn-sm btn-outline-primary w-100">Add
                         Product</button>
                     <button *ngIf="isinEditMode" type="button" (click)="onUpdate()" [disabled]="DisableUpdatebtn"

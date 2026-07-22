@@ -15,7 +15,7 @@ import { tick } from '@angular/core/testing';
 export class UserFormComponent implements OnInit {
   UserForm !: FormGroup
   isinEditMode: boolean = false
-  edituser !: Iuser
+  edituser ?: Iuser
   userId !: string
 
   constructor(private userserive: UsersService,
@@ -55,7 +55,7 @@ export class UserFormComponent implements OnInit {
           this.formcontrols['address'].get('permanent')?.disable()
         }
         else if (this.isinEditMode && !val) {
-          this.formcontrols['address'].get('permanent')?.patchValue(this.edituser.address.permanent)
+          this.formcontrols['address'].get('permanent')?.patchValue(this.edituser?.address.permanent)
           this.formcontrols['address'].get('permanent')?.enable()
         }
         else {
@@ -136,10 +136,12 @@ export class UserFormComponent implements OnInit {
           }
           this.skillsArr.clear()
           this.edituser.skills.forEach(ele => {
-            let control = new FormControl(ele)
+            let control = new FormControl({
+              value: ele,
+              disabled: res.userRole === 'Candidate'
+            })
             this.skillsArr.push(control)
           })
-
         }
       })
     }
@@ -158,11 +160,18 @@ export class UserFormComponent implements OnInit {
           },
           error: err => {
             console.log(err);
-
           }
         })
     }
-
+  }
+  onremoveskills(i: number) {
+    return this.skillsArr.removeAt(i)
+  }
+  canDeactivate(): boolean {
+    if (!!this.UserForm.dirty && this.isinEditMode) {
+      return confirm(`Are You Sure You Want To Discard The Changes !!!`)
+    }
+    return true
   }
 
 }

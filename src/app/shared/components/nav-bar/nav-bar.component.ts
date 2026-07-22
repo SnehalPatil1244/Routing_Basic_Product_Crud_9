@@ -3,6 +3,7 @@ import { ProductsService } from '../../services/products.service';
 import { Router } from '@angular/router';
 import { UsersService } from '../../services/users.service';
 import { FairsService } from '../../services/fairs.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,14 +11,21 @@ import { FairsService } from '../../services/fairs.service';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-
+  userRole !: string
   constructor(private productservice: ProductsService,
     private userserive: UsersService,
     private fairservice: FairsService,
+    private authsetvice: AuthService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.userRole = this.authsetvice.getuserRole()!
+    this.authsetvice.isloginSub$.subscribe({
+      next: res => {
+        this.userRole = res
+      }
+    })
   }
 
 
@@ -42,5 +50,10 @@ export class NavBarComponent implements OnInit {
       this.router.navigate(['/fairs', res[0].fairId])
     })
   }
+  onLogOut() {
+    this.authsetvice.LogOut()
+    this.router.navigate([''])
+  }
+
 
 }

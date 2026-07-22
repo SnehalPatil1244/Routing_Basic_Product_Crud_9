@@ -1,16 +1,19 @@
 <div class="container-fluid">
     <div class="navbar-custom px-3">
         <div class="col-md-4">
-            <div class="navbar-brand fw-bold fs-3" routerLink="">
+            <div class="navbar-brand fw-bold fs-3" routerLink="home">
                 NavBar
             </div>
         </div>
         <div class="col-md-8">
             <ul class="navbar-menu">
                 <li class="mr-3"><a routerLink="home">Home</a></li>
-                <li class="mr-3"><a (click)="ongouser()" >Users</a></li>
-                <li class="mr-3"><a (click)="ongoUpdate()" >Products</a></li>
-                <li class="mr-3"><a (click)="ongofairs()" >Fairs</a></li>
+                <li class="mr-3"><a (click)="ongouser()">Users</a></li>
+                <li class="mr-3"><a (click)="ongoUpdate()">Products</a></li>
+                <li class="mr-3"><a (click)="ongofairs()">Fairs</a></li>
+                <strong class="text-black badge-warning p-2" style="border-radius: 5px;">{{userRole}}</strong>
+
+                <button (click)="onLogOut()" class="text-black" mat-raised-button color="warn">Log out</button>
             </ul>
         </div>
     </div>
